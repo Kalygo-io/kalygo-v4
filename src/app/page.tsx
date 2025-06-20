@@ -1,6 +1,12 @@
+"use client";
+
+import { useState } from 'react';
 import Logo3D from './components/Logo3D';
+import MobileMenu from './components/MobileMenu';
 
 export default function Home() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       {/* Navigation */}
@@ -31,7 +37,10 @@ export default function Home() {
               </div>
             </div>
             <div className="md:hidden">
-              <button className="text-gray-700 hover:text-blue-600 p-2">
+              <button 
+                className="text-gray-700 hover:text-blue-600 p-2"
+                onClick={() => setIsMobileMenuOpen(true)}
+              >
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
@@ -40,6 +49,12 @@ export default function Home() {
           </div>
         </div>
       </nav>
+
+      {/* Mobile Menu */}
+      <MobileMenu 
+        isOpen={isMobileMenuOpen} 
+        onClose={() => setIsMobileMenuOpen(false)} 
+      />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden">
@@ -194,7 +209,7 @@ export default function Home() {
                 Kalygo
               </h3>
               <p className="text-gray-400">
-                Transforming businesses through innovative technology solutions.
+                The future of escrow.
               </p>
             </div>
             <div>
@@ -209,7 +224,6 @@ export default function Home() {
             <div>
               <h4 className="font-semibold mb-4">Support</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">Help Center</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Documentation</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Community</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Status</a></li>
