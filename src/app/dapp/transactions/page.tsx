@@ -15,51 +15,51 @@ export default function TransactionsPage() {
       id: 'TX-001',
       contractId: 'CON-1234',
       type: 'Payment',
-      amount: '$1,500.00',
+      amount: '$50.00',
       status: 'completed',
-      date: '2024-01-15',
+      date: '2024-07-21',
       time: '14:30',
-      description: 'Payment for web development services'
+      description: 'Payment for weekend mountain bike rental'
     },
     {
       id: 'TX-002',
       contractId: 'CON-1235',
       type: 'Escrow',
-      amount: '$2,300.00',
+      amount: '$25.00',
       status: 'pending',
-      date: '2024-01-14',
+      date: '2024-07-20',
       time: '09:15',
-      description: 'Escrow for design project'
+      description: 'Escrow for renting a set of dumbbells'
     },
     {
       id: 'TX-003',
       contractId: 'CON-1236',
       type: 'Refund',
-      amount: '$800.00',
+      amount: '$30.00',
       status: 'completed',
-      date: '2024-01-13',
+      date: '2024-07-19',
       time: '16:45',
-      description: 'Refund for cancelled project'
+      description: 'Refund for returned bicycle rental'
     },
     {
       id: 'TX-004',
       contractId: 'CON-1237',
       type: 'Payment',
-      amount: '$3,200.00',
+      amount: '$150.00',
       status: 'processing',
-      date: '2024-01-12',
+      date: '2024-07-18',
       time: '11:20',
-      description: 'Payment for consulting services'
+      description: 'Payment for one-day car rental'
     },
     {
       id: 'TX-005',
       contractId: 'CON-1238',
       type: 'Escrow',
-      amount: '$1,800.00',
+      amount: '$40.00',
       status: 'pending',
-      date: '2024-01-11',
+      date: '2024-07-17',
       time: '13:10',
-      description: 'Escrow for marketing campaign'
+      description: 'Escrow for renting a kayak'
     }
   ];
 
