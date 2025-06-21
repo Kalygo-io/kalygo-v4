@@ -3,6 +3,9 @@
 import { useState } from 'react';
 import Logo3D from './components/Logo3D';
 import MobileMenu from './components/MobileMenu';
+import Roadmap from './components/Roadmap';
+import Team from './components/Team';
+import Tokenomics from './components/Tokenomics';
 
 export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -22,6 +25,18 @@ export default function Home() {
             </div>
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
+                <a href="#features" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                  Features
+                </a>
+                <a href="#roadmap" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                  Roadmap
+                </a>
+                <a href="#team" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                  Team
+                </a>
+                <a href="#tokenomics" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                  Tokenomics
+                </a>
                 <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
                   Enter dApp
                 </button>
@@ -123,7 +138,7 @@ export default function Home() {
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Advanced Analytics</h3>
               <p className="text-gray-600">
-                Get deep insights into the parties you are entering into agreements with a rest assured that the playing field is level.
+                Get deep insights into the parties you are entering into agreements with and rest assured that the playing field is level.
               </p>
             </div>
 
@@ -136,7 +151,7 @@ export default function Home() {
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Collaboration</h3>
               <p className="text-gray-600">
-                Escrow is a collaborative process. Kalygo&apos;s platform keep all parties up to date on the status of the escrow agreement every step of the way.
+                Escrow is a collaborative process. Mediator&apos;s platform keeps all parties up to date on the status of their escrow agreements every step of the way.
               </p>
             </div>
 
@@ -149,7 +164,7 @@ export default function Home() {
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Customer Focus</h3>
               <p className="text-gray-600">
-                Email notifications, blockchain backed reputation system, rigourous audited control flow and more.
+                Email notifications, blockchain backed reputation system, rigorously audited control flows and more.
               </p>
             </div>
 
@@ -162,7 +177,7 @@ export default function Home() {
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4">Mobile First</h3>
               <p className="text-gray-600">
-                Escrow meets you where you are. On the go and living your best life.
+                Escrow that meets you where you are. On the go and living your best life.
               </p>
             </div>
           </div>
@@ -170,6 +185,12 @@ export default function Home() {
       </section>
 
       <Logo3D />
+
+      <Roadmap />
+
+      <Team />
+
+      <Tokenomics />
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-blue-500 to-blue-600">
@@ -197,7 +218,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
               <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-blue-400 bg-clip-text text-transparent mb-4">
-                Kalygo
+                Mediator
               </h3>
               <p className="text-gray-400">
                 The future of escrow.
@@ -222,7 +243,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 Kalygo, Inc. All rights reserved.</p>
+            <p>&copy; 2025 Mediator, Inc. All rights reserved.</p>
           </div>
         </div>
       </footer>

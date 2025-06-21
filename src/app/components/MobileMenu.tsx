@@ -25,7 +25,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-gray-200">
             <h1 className="text-xl font-bold bg-gradient-to-r from-blue-500 to-blue-600 bg-clip-text text-transparent">
-              Kalygo
+              Mediator
             </h1>
             <button
               onClick={onClose}
@@ -51,7 +51,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               </li>
               <li>
                 <a 
-                  href="#testimonials" 
+                  href="#roadmap" 
                   className="block text-gray-700 hover:text-blue-600 py-2 text-lg font-medium transition-colors"
                   onClick={onClose}
                 >
@@ -60,7 +60,16 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               </li>
               <li>
                 <a 
-                  href="#pricing" 
+                  href="#team" 
+                  className="block text-gray-700 hover:text-blue-600 py-2 text-lg font-medium transition-colors"
+                  onClick={onClose}
+                >
+                  Team
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="#tokenomics" 
                   className="block text-gray-700 hover:text-blue-600 py-2 text-lg font-medium transition-colors"
                   onClick={onClose}
                 >
