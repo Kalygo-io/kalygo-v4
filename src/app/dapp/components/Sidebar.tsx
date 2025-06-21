@@ -1,6 +1,10 @@
 "use client";
 
-const Sidebar = () => {
+interface SidebarProps {
+  onClose?: () => void;
+}
+
+const Sidebar = ({ onClose }: SidebarProps) => {
     const navItems = [
       { name: 'Home', icon: 'home' },
       { name: 'Contract', icon: 'contract', active: true },
@@ -33,9 +37,19 @@ const Sidebar = () => {
     };
   
     return (
-      <div className="w-64 bg-blue-600 text-white flex flex-col">
-        <div className="p-4 border-blue-700">
+      <div className="w-64 bg-blue-600 text-white flex flex-col h-full">
+        <div className="p-4 border-b border-blue-700 flex items-center justify-between">
           <h1 className="text-2xl font-bold">Mediator</h1>
+          {onClose && (
+            <button
+              onClick={onClose}
+              className="md:hidden p-2 text-white hover:text-blue-200 transition-colors"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          )}
         </div>
         <nav className="flex-1 p-2">
           {navItems.map((item) => (
@@ -47,6 +61,7 @@ const Sidebar = () => {
                   ? 'bg-blue-700'
                   : 'hover:bg-blue-700'
               }`}
+              onClick={onClose}
             >
               {getIcon(item.icon)}
               <span className="ml-4">{item.name}</span>
