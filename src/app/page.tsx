@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Logo3D from './components/Logo3D';
 import MobileMenu from './components/MobileMenu';
 import Roadmap from './components/Roadmap';
@@ -12,8 +14,33 @@ import Footer from './components/Footer';
 export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const handleEnterDApp = () => {
+    toast.info('Coming soon', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+  };
+
+  const handleWatchDemo = () => {
+    toast.info('Coming soon', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      {/* Toast Container */}
+      <ToastContainer />
+      
       {/* Navigation */}
       <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -39,7 +66,10 @@ export default function Home() {
                 <a href="#tokenomics" className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                   Tokenomics
                 </a>
-                <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                <button 
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                  onClick={handleEnterDApp}
+                >
                   Enter dApp
                 </button>
               </div>
@@ -61,7 +91,8 @@ export default function Home() {
       {/* Mobile Menu */}
       <MobileMenu 
         isOpen={isMobileMenuOpen} 
-        onClose={() => setIsMobileMenuOpen(false)} 
+        onClose={() => setIsMobileMenuOpen(false)}
+        onEnterDApp={handleEnterDApp}
       />
 
       {/* Hero Section */}
@@ -194,7 +225,7 @@ export default function Home() {
 
       <Tokenomics />
 
-      <CTA />
+      <CTA onEnterDApp={handleEnterDApp} onWatchDemo={handleWatchDemo} />
 
       <Footer />
     </div>

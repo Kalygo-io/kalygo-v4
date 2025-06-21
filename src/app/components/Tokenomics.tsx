@@ -85,7 +85,7 @@ export default function Tokenomics() {
                   <h4 className="text-lg font-semibold text-gray-900">Community Access</h4>
                 </div>
                 <p className="text-gray-600">
-                  Exclusive access community events
+                  Exclusive access to community events
                 </p>
               </div>
             </div>

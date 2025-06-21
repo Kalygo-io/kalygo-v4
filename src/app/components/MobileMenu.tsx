@@ -3,9 +3,10 @@
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
+  onEnterDApp: () => void;
 }
 
-export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
+export default function MobileMenu({ isOpen, onClose, onEnterDApp }: MobileMenuProps) {
   return (
     <>
       {/* Backdrop */}
@@ -81,7 +82,13 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           
           {/* Footer */}
           <div className="p-4 border-t border-gray-200">
-            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg text-lg font-semibold transition-colors">
+            <button 
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg text-lg font-semibold transition-colors"
+              onClick={() => {
+                onEnterDApp();
+                onClose();
+              }}
+            >
               Enter dApp
             </button>
           </div>
