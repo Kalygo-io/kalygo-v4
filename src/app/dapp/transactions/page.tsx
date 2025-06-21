@@ -153,7 +153,9 @@ export default function TransactionsPage() {
                   </label>
                   <select
                     id="status"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                      statusFilter === 'all' ? 'text-gray-500' : 'text-black'
+                    }`}
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
                   >
