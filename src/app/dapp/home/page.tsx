@@ -61,7 +61,7 @@ export default function HomePage() {
                   </div>
                   <div className="ml-4">
                     <p className="text-sm font-medium text-gray-600">Total Value</p>
-                    <p className="text-2xl font-semibold text-gray-900">$45.2K</p>
+                    <p className="text-2xl font-semibold text-gray-900">$45.20</p>
                   </div>
                 </div>
               </div>
@@ -115,7 +115,7 @@ export default function HomePage() {
                     <div className="w-2 h-2 bg-green-600 rounded-full"></div>
                     <div className="flex-1">
                       <p className="text-sm font-medium text-gray-900">Payment received</p>
-                      <p className="text-sm text-gray-500">$1,500 received for Contract #1230</p>
+                      <p className="text-sm text-gray-500">$15.00 received for Contract #1230</p>
                     </div>
                     <span className="text-sm text-gray-500">1d ago</span>
                   </div>
