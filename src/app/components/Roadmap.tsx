@@ -7,7 +7,7 @@ export default function Roadmap() {
             Development Roadmap
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Our journey to expand the escrow space with AI and blockchain technology
+            Our journey to expand the escrow space with AI and Blockchain technology
           </p>
         </div>
         
@@ -25,6 +25,7 @@ export default function Roadmap() {
                 <ul className="mt-4 text-sm text-gray-600 space-y-1">
                   <li>• Smart contract development</li>
                   <li>• Full stack development</li>
+                  <li>• Mobile responsive design</li>
                   <li>• Basic escrow functionality</li>
                   <li>• Security audits</li>
                   <li>• Quality assurance with partners</li>
@@ -43,6 +44,7 @@ export default function Roadmap() {
                   <li>• DAO-powered dispute resolution</li>
                   <li>• Rental Marketplace</li>
                   <li>• Onchain reputation system</li>
+                  <li>• Native mobile app</li>
                 </ul>
               </div>
             </div>

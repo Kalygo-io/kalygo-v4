@@ -9,7 +9,7 @@ export default function Team() {
             Meet Our Team
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Experienced professionals from AI, blockchain, and Tech backgrounds
+            Experienced professionals from AI, Blockchain, and Tech backgrounds
           </p>
         </div>
         
@@ -57,7 +57,7 @@ export default function Team() {
             <h3 className="text-xl font-semibold text-gray-900 mb-2">Andrei Lemeshevski</h3>
             <p className="text-blue-600 font-medium mb-4">Growth Advisor</p>
             <p className="text-gray-600 text-sm mb-4">
-              Founder of ETHMiami
+              Founder of ETHMiami.
             </p>
             <div className="flex justify-center space-x-3">
               <a href="https://www.linkedin.com/in/andrei-lemeshevski-76655b6/" className="text-gray-400 hover:text-blue-600 transition-colors">
