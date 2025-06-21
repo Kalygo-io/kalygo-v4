@@ -17,7 +17,7 @@ export default function DappPage() {
       
       {/* Mobile Sidebar Overlay */}
       {isSidebarOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-gray-500/50 z-40 md:hidden"
           onClick={() => setIsSidebarOpen(false)}
         />

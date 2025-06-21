@@ -1,10 +1,14 @@
 "use client";
 
+import { useRouter } from 'next/navigation';
+
 interface SidebarProps {
   onClose?: () => void;
 }
 
 const Sidebar = ({ onClose }: SidebarProps) => {
+    const router = useRouter();
+    
     const navItems = [
       { name: 'Home', icon: 'home' },
       { name: 'Contract', icon: 'contract', active: true },
@@ -35,11 +39,20 @@ const Sidebar = ({ onClose }: SidebarProps) => {
           return null;
       }
     };
+
+    const handleMediatorClick = () => {
+      router.push('/');
+    };
   
     return (
       <div className="w-64 bg-blue-600 text-white flex flex-col h-full">
         <div className="p-4 border-b border-blue-700 flex items-center justify-between">
-          <h1 className="text-2xl font-bold">Mediator</h1>
+          <h1 
+            className="text-2xl font-bold cursor-pointer hover:text-blue-200 transition-colors"
+            onClick={handleMediatorClick}
+          >
+            Mediator
+          </h1>
           {onClose && (
             <button
               onClick={onClose}
