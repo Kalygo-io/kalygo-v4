@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 interface SidebarProps {
   onClose?: () => void;
@@ -8,12 +8,20 @@ interface SidebarProps {
 
 const Sidebar = ({ onClose }: SidebarProps) => {
     const router = useRouter();
+    const pathname = usePathname();
     
     const navItems = [
-      { name: 'Home', icon: 'home' },
-      { name: 'Contract', icon: 'contract', active: true },
-      { name: 'Transactions', icon: 'transactions' },
+      { name: 'Home', icon: 'home', path: '/dapp/home' },
+      { name: 'Contract', icon: 'contract', path: '/dapp/contract' },
+      { name: 'Transactions', icon: 'transactions', path: '/dapp/transactions' },
     ];
+
+    const handleNavClick = (path: string) => {
+      router.push(path);
+      if (onClose) {
+        onClose();
+      }
+    };
   
     const getIcon = (iconName: string) => {
       switch (iconName) {
@@ -65,21 +73,23 @@ const Sidebar = ({ onClose }: SidebarProps) => {
           )}
         </div>
         <nav className="flex-1 p-2">
-          {navItems.map((item) => (
-            <a
-              key={item.name}
-              href="#"
-              className={`flex items-center p-3 my-1 rounded-lg transition-colors ${
-                item.active
-                  ? 'bg-blue-700'
-                  : 'hover:bg-blue-700'
-              }`}
-              onClick={onClose}
-            >
-              {getIcon(item.icon)}
-              <span className="ml-4">{item.name}</span>
-            </a>
-          ))}
+          {navItems.map((item) => {
+            const isActive = pathname === item.path;
+            return (
+              <button
+                key={item.name}
+                className={`w-full flex items-center p-3 my-1 rounded-lg transition-colors ${
+                  isActive
+                    ? 'bg-blue-700'
+                    : 'hover:bg-blue-700'
+                }`}
+                onClick={() => handleNavClick(item.path)}
+              >
+                {getIcon(item.icon)}
+                <span className="ml-4">{item.name}</span>
+              </button>
+            );
+          })}
         </nav>
       </div>
     );
