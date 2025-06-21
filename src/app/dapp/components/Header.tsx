@@ -27,10 +27,7 @@ const Header = ({ onMenuClick }: HeaderProps) => {
         {/* Right side buttons */}
         <div className="flex items-center">
           <button className="bg-blue-500 text-white px-4 py-2 rounded-md mr-4 hover:bg-blue-600">
-            Sign In with Unstoppable
-          </button>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded-md mr-4 hover:bg-blue-600">
-            Sign In
+            Connect Wallet
           </button>
           <div className="relative">
             <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
