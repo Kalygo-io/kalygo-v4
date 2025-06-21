@@ -19,8 +19,8 @@ export default function Team() {
             <Image 
               src="/team/tad_duval.png" 
               alt="Tad Duval" 
-              width={96}
-              height={96}
+              width={192}
+              height={192}
               className="w-24 h-24 rounded-full mx-auto mb-6 object-cover"
             />
             <h3 className="text-xl font-semibold text-gray-900 mb-2">Tad Duval</h3>
@@ -50,8 +50,8 @@ export default function Team() {
             <Image 
               src="/team/andrei_lemeshevski.jpg" 
               alt="Andrei Lemeshevski" 
-              width={96}
-              height={96}
+              width={192}
+              height={192}
               className="w-24 h-24 rounded-full mx-auto mb-6 object-cover"
             />
             <h3 className="text-xl font-semibold text-gray-900 mb-2">Andrei Lemeshevski</h3>
@@ -80,8 +80,8 @@ export default function Team() {
             <Image 
               src="/team/nick_lemeshevski.jpg" 
               alt="Nick Lemeshevski" 
-              width={96}
-              height={96}
+              width={192}
+              height={192}
               className="w-24 h-24 rounded-full mx-auto mb-6 object-cover"
             />
             <h3 className="text-xl font-semibold text-gray-900 mb-2">Nick Lemeshevski</h3>
