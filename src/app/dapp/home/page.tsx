@@ -1,14 +1,33 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useAccount } from 'wagmi';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
+import ContractList from '../components/ContractList';
+import { getContractsByAddress, DeployedContract } from '../utils/contractStorage';
 
 export default function HomePage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { address, isConnected } = useAccount();
+  const [userContracts, setUserContracts] = useState<DeployedContract[]>([]);
+
+  useEffect(() => {
+    if (isConnected && address) {
+      const contracts = getContractsByAddress(address);
+      setUserContracts(contracts);
+    } else {
+      setUserContracts([]);
+    }
+  }, [isConnected, address]);
 
   return (
     <div className="flex h-screen bg-gray-100">
+      {/* Toast Container */}
+      <ToastContainer />
+      
       {/* Desktop Sidebar */}
       <div className="hidden md:block">
         <Sidebar />
@@ -34,10 +53,13 @@ export default function HomePage() {
         <Header onMenuClick={() => setIsSidebarOpen(true)} />
         <main className="flex-1 p-8">
           <div className="max-w-7xl mx-auto">
-            <h1 className="text-3xl font-bold text-gray-900 mb-8">Dashboard</h1>
+            <div className="mb-8">
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard</h1>
+              <p className="text-gray-600">Welcome to your Mediator dashboard</p>
+            </div>
             
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
               <div className="bg-white rounded-lg shadow p-6">
                 <div className="flex items-center">
                   <div className="p-2 bg-blue-100 rounded-lg">
@@ -46,8 +68,8 @@ export default function HomePage() {
                     </svg>
                   </div>
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600">Active Contracts</p>
-                    <p className="text-2xl font-semibold text-gray-900">12</p>
+                    <p className="text-sm font-medium text-gray-600">Total Contracts</p>
+                    <p className="text-2xl font-semibold text-gray-900">{userContracts.length}</p>
                   </div>
                 </div>
               </div>
@@ -56,12 +78,14 @@ export default function HomePage() {
                 <div className="flex items-center">
                   <div className="p-2 bg-green-100 rounded-lg">
                     <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600">Total Value</p>
-                    <p className="text-2xl font-semibold text-gray-900">$45.20</p>
+                    <p className="text-sm font-medium text-gray-600">Active</p>
+                    <p className="text-2xl font-semibold text-gray-900">
+                      {userContracts.length}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -74,8 +98,8 @@ export default function HomePage() {
                     </svg>
                   </div>
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600">Pending</p>
-                    <p className="text-2xl font-semibold text-gray-900">3</p>
+                    <p className="text-sm font-medium text-gray-600">In Arbitration</p>
+                    <p className="text-2xl font-semibold text-gray-900">0</p>
                   </div>
                 </div>
               </div>
@@ -84,52 +108,40 @@ export default function HomePage() {
                 <div className="flex items-center">
                   <div className="p-2 bg-purple-100 rounded-lg">
                     <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                     </svg>
                   </div>
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600">Completed</p>
-                    <p className="text-2xl font-semibold text-gray-900">28</p>
+                    <p className="text-sm font-medium text-gray-600">Total Value</p>
+                    <p className="text-2xl font-semibold text-gray-900">$0.00</p>
                   </div>
                 </div>
               </div>
             </div>
             
-            {/* Recent Activity */}
-            <div className="bg-white rounded-lg shadow">
-              <div className="px-6 py-4 border-b border-gray-200">
-                <h2 className="text-lg font-semibold text-gray-900">Recent Activity</h2>
+            {/* Deployed Contracts Section */}
+            <div className="mb-8">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-gray-900">Your Contracts</h2>
+                <a 
+                  href="/dapp/contract" 
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                >
+                  Deploy New Contract
+                </a>
               </div>
-              <div className="p-6">
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-gray-900">New contract created</p>
-                      <p className="text-sm text-gray-500">Contract #1234 was created 2 hours ago</p>
-                    </div>
-                    <span className="text-sm text-gray-500">2h ago</span>
-                  </div>
-                  
-                  <div className="flex items-center space-x-4">
-                    <div className="w-2 h-2 bg-green-600 rounded-full"></div>
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-gray-900">Payment received</p>
-                      <p className="text-sm text-gray-500">$15.00 received for Contract #1230</p>
-                    </div>
-                    <span className="text-sm text-gray-500">1d ago</span>
-                  </div>
-                  
-                  <div className="flex items-center space-x-4">
-                    <div className="w-2 h-2 bg-yellow-600 rounded-full"></div>
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-gray-900">Dispute opened</p>
-                      <p className="text-sm text-gray-500">Dispute opened for Contract #1228</p>
-                    </div>
-                    <span className="text-sm text-gray-500">2d ago</span>
-                  </div>
+              
+              {!isConnected ? (
+                <div className="bg-white rounded-lg shadow p-8 text-center">
+                  <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                  <h3 className="mt-2 text-sm font-medium text-gray-900">Connect your wallet</h3>
+                  <p className="mt-1 text-sm text-gray-500">Connect your wallet to view your contracts.</p>
                 </div>
-              </div>
+              ) : (
+                <ContractList contracts={userContracts} />
+              )}
             </div>
           </div>
         </main>

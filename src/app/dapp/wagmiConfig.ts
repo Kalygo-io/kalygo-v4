@@ -8,5 +8,6 @@ export const config = createConfig({
     [sepolia.id]: http(),
     [baseSepolia.id]: http(),
     [base.id]: http(),
-  }
+  },
+  ssr: true,
 })

@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import ContractForm from '../components/ContractForm';
@@ -10,6 +12,9 @@ export default function ContractPage() {
 
   return (
     <div className="flex h-screen bg-gray-100">
+      {/* Toast Container */}
+      <ToastContainer />
+      
       {/* Desktop Sidebar */}
       <div className="hidden md:block">
         <Sidebar />
