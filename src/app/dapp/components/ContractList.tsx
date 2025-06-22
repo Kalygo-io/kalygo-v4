@@ -108,7 +108,7 @@ const ContractList = ({ contracts }: ContractListProps) => {
 
     return (
       <div className="p-6 bg-gray-50 rounded-lg">
-        <h3 className="text-lg font-semibold mb-4">Contract Details</h3>
+        <h3 className="text-lg font-semibold mb-4 text-gray-900">Contract Details</h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
