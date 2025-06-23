@@ -141,7 +141,7 @@ const ContractList = ({ contracts }: ContractListProps) => {
         </div>
 
         {/* Contract Actions */}
-        <div className="space-y-4">
+        <div className="mt-6 space-y-4">
           {/* Deposit (Buyer only) */}
           {isBuyer && !contractState.arbitrationFlag && (
             <div className="flex gap-2">
@@ -162,27 +162,29 @@ const ContractList = ({ contracts }: ContractListProps) => {
             </div>
           )}
 
-          {/* Close Deal (Seller only) */}
-          {isSeller && !contractState.arbitrationFlag && (
-            <button
-              onClick={handleCloseDeal}
-              disabled={isPending || isConfirming}
-              className="w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:bg-gray-400"
-            >
-              {isPending ? 'Processing...' : 'Close Deal'}
-            </button>
-          )}
+          <div className="flex flex-wrap gap-4">
+            {/* Close Deal (Seller only) */}
+            {isSeller && !contractState.arbitrationFlag && (
+              <button
+                onClick={handleCloseDeal}
+                disabled={isPending || isConfirming}
+                className="flex-1 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:bg-gray-400"
+              >
+                {isPending ? 'Processing...' : 'Close Deal'}
+              </button>
+            )}
 
-          {/* Start Arbitration (Buyer or Seller) */}
-          {(isBuyer || isSeller) && !contractState.arbitrationFlag && (
-            <button
-              onClick={handleStartArbitration}
-              disabled={isPending || isConfirming}
-              className="w-full px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700 disabled:bg-gray-400"
-            >
-              {isPending ? 'Processing...' : 'Start Arbitration'}
-            </button>
-          )}
+            {/* Start Arbitration (Buyer or Seller) */}
+            {(isBuyer || isSeller) && !contractState.arbitrationFlag && (
+              <button
+                onClick={handleStartArbitration}
+                disabled={isPending || isConfirming}
+                className="flex-1 px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700 disabled:bg-gray-400"
+              >
+                {isPending ? 'Processing...' : 'Start Arbitration'}
+              </button>
+            )}
+          </div>
 
           {/* Handle Arbitration Results (Evaluator only) */}
           {isEvaluator && contractState.arbitrationFlag && (
