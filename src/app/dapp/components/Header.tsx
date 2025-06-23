@@ -1,6 +1,5 @@
 "use client";
 
-import { useAccount } from 'wagmi'
 import WalletConnectorButton from './WalletConnector';
 
 interface HeaderProps {
@@ -8,10 +7,6 @@ interface HeaderProps {
 }
 
 const Header = ({ onMenuClick }: HeaderProps) => {
-
-    const { address } = useAccount()
-  
-    console.log("-> address <-", address)
 
     return (
       <header className="bg-white shadow-md p-4 flex justify-between items-center">
@@ -24,8 +19,6 @@ const Header = ({ onMenuClick }: HeaderProps) => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
-
-        {/* <WalletConnectorButton /> */}
         
         {/* Desktop Spacer */}
         <div className="hidden md:block"></div>

@@ -101,6 +101,8 @@ const ContractDetailsPage = () => {
       );
     }
 
+    console.log("-> contractState <-", contractState)
+
     const isBuyer = address?.toLowerCase() === contractState.buyer.toLowerCase();
     const isSeller = address?.toLowerCase() === contractState.seller.toLowerCase();
     const isEvaluator = address?.toLowerCase() === contractState.evaluatorAddress.toLowerCase();
