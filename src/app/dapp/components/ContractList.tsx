@@ -1,9 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { useAccount } from 'wagmi';
-import { toast } from 'react-toastify';
-import { useContractRead, useContractActions } from '../utils/contractInteraction';
+import { useContractRead } from '../utils/contractInteraction';
 import { useRouter } from 'next/navigation';
 
 interface ContractListProps {
@@ -15,76 +13,73 @@ interface ContractListProps {
 }
 
 const ContractList = ({ contracts }: ContractListProps) => {
-  const { address } = useAccount();
   const [selectedContract, setSelectedContract] = useState<string | null>(null);
   const router = useRouter();
 
   const ContractDetails = ({ contractAddress }: { contractAddress: string }) => {
     const { contractState, isLoading } = useContractRead(contractAddress);
-    const { 
-      deposit, 
-      closeDeal, 
-      startArbitration, 
-      handleArbitrationResults,
-      isPending,
-      isConfirming 
-    } = useContractActions(contractAddress);
+    // const { 
+    //   deposit, 
+    //   closeDeal, 
+    //   startArbitration, 
+    //   handleArbitrationResults,
+    // } = useContractActions(contractAddress);
 
-    const [depositAmount, setDepositAmount] = useState('');
-    const [arbitrationWinner, setArbitrationWinner] = useState('');
+    // const [depositAmount, setDepositAmount] = useState('');
+    // const [arbitrationWinner, setArbitrationWinner] = useState('');
 
-    const handleDeposit = async () => {
-      if (!depositAmount) {
-        toast.error('Please enter a deposit amount');
-        return;
-      }
+    // const handleDeposit = async () => {
+    //   if (!depositAmount) {
+    //     toast.error('Please enter a deposit amount');
+    //     return;
+    //   }
       
-      try {
-        const amount = BigInt(parseFloat(depositAmount) * 10**18); // Convert to wei
-        await deposit(amount);
-        toast.success('Deposit initiated');
-        setDepositAmount('');
-      } catch (err) {
-        console.error('Deposit error:', err);
-        toast.error('Deposit failed');
-      }
-    };
+    //   try {
+    //     const amount = BigInt(parseFloat(depositAmount) * 10**18); // Convert to wei
+    //     await deposit(amount);
+    //     toast.success('Deposit initiated');
+    //     setDepositAmount('');
+    //   } catch (err) {
+    //     console.error('Deposit error:', err);
+    //     toast.error('Deposit failed');
+    //   }
+    // };
 
-    const handleCloseDeal = async () => {
-      try {
-        await closeDeal();
-        toast.success('Deal closed successfully');
-      } catch (err) {
-        console.error('Close deal error:', err);
-        toast.error('Failed to close deal');
-      }
-    };
+    // const handleCloseDeal = async () => {
+    //   try {
+    //     await closeDeal();
+    //     toast.success('Deal closed successfully');
+    //   } catch (err) {
+    //     console.error('Close deal error:', err);
+    //     toast.error('Failed to close deal');
+    //   }
+    // };
 
-    const handleStartArbitration = async () => {
-      try {
-        await startArbitration();
-        toast.success('Arbitration started');
-      } catch (err) {
-        console.error('Start arbitration error:', err);
-        toast.error('Failed to start arbitration');
-      }
-    };
+    // const handleStartArbitration = async () => {
+    //   try {
+    //     await startArbitration();
+    //     toast.success('Arbitration started');
+    //   } catch (err) {
+    //     console.error('Start arbitration error:', err);
+    //     toast.error('Failed to start arbitration');
+    //   }
+    // };
 
-    const handleArbitrationResult = async () => {
-      if (!arbitrationWinner) {
-        toast.error('Please enter the winner address');
-        return;
-      }
+    // const handleArbitrationResult = async () => {
+    //   if (!arbitrationWinner) {
+    //     toast.error('Please enter the winner address');
+    //     return;
+    //   }
       
-      try {
-        await handleArbitrationResults(arbitrationWinner);
-        toast.success('Arbitration result processed');
-        setArbitrationWinner('');
-      } catch (err) {
-        console.error('Arbitration result error:', err);
-        toast.error('Failed to process arbitration result');
-      }
-    };
+    //   try {
+    //     await handleArbitrationResults(arbitrationWinner);
+    //     toast.success('Arbitration result processed');
+    //     setArbitrationWinner('');
+    //   } catch (err) {
+    //     console.error('Arbitration result error:', err);
+    //     toast.error('Failed to process arbitration result');
+    //   }
+    // };
 
     if (isLoading) {
       return (
@@ -103,9 +98,9 @@ const ContractList = ({ contracts }: ContractListProps) => {
       );
     }
 
-    const isBuyer = address?.toLowerCase() === contractState.buyer.toLowerCase();
-    const isSeller = address?.toLowerCase() === contractState.seller.toLowerCase();
-    const isEvaluator = address?.toLowerCase() === contractState.evaluatorAddress.toLowerCase();
+    // const isBuyer = address?.toLowerCase() === contractState.buyer.toLowerCase();
+    // const isSeller = address?.toLowerCase() === contractState.seller.toLowerCase();
+    // const isEvaluator = address?.toLowerCase() === contractState.evaluatorAddress.toLowerCase();
     const limitationDate = new Date(Number(contractState.limitationDate) * 1000);
 
     return (

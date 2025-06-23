@@ -214,7 +214,7 @@ const ContractDetailsPage = () => {
 
           {/* Placeholder Actions */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Communication & Notes</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Additional features</h3>
             <div className="flex flex-wrap gap-4">
               <button
                 onClick={() => toast.info('Coming soon!')}
