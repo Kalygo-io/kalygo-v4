@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useAccount } from 'wagmi';
 import { toast } from 'react-toastify';
 import { useContractRead, useContractActions } from '../utils/contractInteraction';
+import { useRouter } from 'next/navigation';
 
 interface ContractListProps {
   contracts: Array<{
@@ -16,6 +17,7 @@ interface ContractListProps {
 const ContractList = ({ contracts }: ContractListProps) => {
   const { address } = useAccount();
   const [selectedContract, setSelectedContract] = useState<string | null>(null);
+  const router = useRouter();
 
   const ContractDetails = ({ contractAddress }: { contractAddress: string }) => {
     const { contractState, isLoading } = useContractRead(contractAddress);
@@ -129,8 +131,8 @@ const ContractList = ({ contracts }: ContractListProps) => {
           </div>
         </div>
 
-        <div className="mb-6">
-          <p className="text-sm font-medium text-gray-700">Arbitration Status</p>
+        <div className="mb-0">
+          <p className="text-sm font-medium text-gray-700">Status</p>
           <span className={`inline-block px-2 py-1 text-xs rounded-full ${
             contractState.arbitrationFlag 
               ? 'bg-red-100 text-red-800' 
@@ -138,73 +140,6 @@ const ContractList = ({ contracts }: ContractListProps) => {
           }`}>
             {contractState.arbitrationFlag ? 'In Arbitration' : 'Active'}
           </span>
-        </div>
-
-        {/* Contract Actions */}
-        <div className="mt-6 space-y-4">
-          {/* Deposit (Buyer only) */}
-          {isBuyer && !contractState.arbitrationFlag && (
-            <div className="flex gap-2">
-              <input
-                type="number"
-                placeholder="Amount in ETH"
-                value={depositAmount}
-                onChange={(e) => setDepositAmount(e.target.value)}
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-              />
-              <button
-                onClick={handleDeposit}
-                disabled={isPending || isConfirming}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-400"
-              >
-                {isPending ? 'Depositing...' : 'Deposit'}
-              </button>
-            </div>
-          )}
-
-          <div className="flex flex-wrap gap-4">
-            {/* Close Deal (Seller only) */}
-            {isSeller && !contractState.arbitrationFlag && (
-              <button
-                onClick={handleCloseDeal}
-                disabled={isPending || isConfirming}
-                className="flex-1 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:bg-gray-400"
-              >
-                {isPending ? 'Processing...' : 'Close Deal'}
-              </button>
-            )}
-
-            {/* Start Arbitration (Buyer or Seller) */}
-            {(isBuyer || isSeller) && !contractState.arbitrationFlag && (
-              <button
-                onClick={handleStartArbitration}
-                disabled={isPending || isConfirming}
-                className="flex-1 px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700 disabled:bg-gray-400"
-              >
-                {isPending ? 'Processing...' : 'Start Arbitration'}
-              </button>
-            )}
-          </div>
-
-          {/* Handle Arbitration Results (Evaluator only) */}
-          {isEvaluator && contractState.arbitrationFlag && (
-            <div className="space-y-2">
-              <input
-                type="text"
-                placeholder="Winner address (0x...)"
-                value={arbitrationWinner}
-                onChange={(e) => setArbitrationWinner(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-              />
-              <button
-                onClick={handleArbitrationResult}
-                disabled={isPending || isConfirming}
-                className="w-full px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 disabled:bg-gray-400"
-              >
-                {isPending ? 'Processing...' : 'Process Arbitration Result'}
-              </button>
-            </div>
-          )}
         </div>
       </div>
     );
@@ -233,14 +168,22 @@ const ContractList = ({ contracts }: ContractListProps) => {
                 <p className="text-sm text-gray-500 font-mono">{contract.address}</p>
                 <p className="text-xs text-gray-400">Deployed: {new Date(contract.deployedAt).toLocaleDateString()}</p>
               </div>
-              <button
-                onClick={() => setSelectedContract(
-                  selectedContract === contract.address ? null : contract.address
-                )}
-                className="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200"
-              >
-                {selectedContract === contract.address ? 'Hide Details' : 'View Details'}
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => router.push(`/dapp/contract/${contract.address}`)}
+                  className="px-3 py-1 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                >
+                  View Details
+                </button>
+                <button
+                  onClick={() => setSelectedContract(
+                    selectedContract === contract.address ? null : contract.address
+                  )}
+                  className="px-3 py-1 text-sm bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
+                >
+                  {selectedContract === contract.address ? 'Hide' : 'Show More'}
+                </button>
+              </div>
             </div>
           </div>
           
