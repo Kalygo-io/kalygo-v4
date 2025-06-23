@@ -116,37 +116,58 @@ interface AlchemyTransfer {
 
 const findUserDeployedContracts = async (publicClient: PublicClient, userAddress: string): Promise<DeployedContract[]> => {
   try {
-    const res = await fetch(ALCHEMY_RPC, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        id: 1,
-        jsonrpc: '2.0',
-        method: 'alchemy_getAssetTransfers',
-        params: [{
-          fromBlock: '0x0',
-          toBlock: 'latest',
-          fromAddress: userAddress,
-          category: ['external'],
-          maxCount: '0x32', // 50 transactions
-          order: 'desc'
-        }],
-      }),
+    const body = (addressParam: 'fromAddress' | 'toAddress') => ({
+      id: 1,
+      jsonrpc: '2.0',
+      method: 'alchemy_getAssetTransfers',
+      params: [{
+        fromBlock: '0x0',
+        toBlock: 'latest',
+        [addressParam]: userAddress,
+        category: ['external'],
+        withMetadata: false, // Keep it simple for contract discovery
+        excludeZeroValue: false,
+        maxCount: '0x64', // 100 transactions
+        order: 'desc'
+      }],
     });
 
-    const json = await res.json();
-    if (json.error) {
-      throw new Error(`Alchemy RPC Error: ${json.error.message}`);
-    }
+    const fromPromise = fetch(ALCHEMY_RPC, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body('fromAddress')),
+    });
 
-    const transfers: AlchemyTransfer[] = json.result?.transfers || [];
-    if (transfers.length === 0) {
+    const toPromise = fetch(ALCHEMY_RPC, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body('toAddress')),
+    });
+    
+    const [fromRes, toRes] = await Promise.all([fromPromise, toPromise]);
+
+    const fromJson = await fromRes.json();
+    const toJson = await toRes.json();
+
+    if (fromJson.error) throw new Error(`Alchemy RPC Error (from): ${fromJson.error.message}`);
+    if (toJson.error) throw new Error(`Alchemy RPC Error (to): ${toJson.error.message}`);
+
+    const fromTransfers: AlchemyTransfer[] = fromJson.result?.transfers || [];
+    const toTransfers: AlchemyTransfer[] = toJson.result?.transfers || [];
+    
+    // Merge and deduplicate
+    const allTransfers = [...fromTransfers, ...toTransfers];
+    const uniqueTransfers = allTransfers.filter(
+        (tx, index, self) => index === self.findIndex(t => t.hash === tx.hash)
+    );
+    
+    if (uniqueTransfers.length === 0) {
       return [];
     }
     
-    // Filter for contract creation transactions (where 'to' is null or empty)
-    const creationTransfers = transfers.filter(transfer => 
-      !transfer.to || transfer.to === '' || transfer.to === '0x'
+    // Filter for contract creation transactions
+    const creationTransfers = uniqueTransfers.filter(transfer => 
+      !transfer.to || transfer.to === '0x'
     );
     
     if (creationTransfers.length === 0) {

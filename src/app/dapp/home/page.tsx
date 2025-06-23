@@ -14,13 +14,13 @@ export default function HomePage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { address, isConnected } = useAccount();
   const [userContracts, setUserContracts] = useState<DeployedContract[]>([]);
-  const { getContractsByAddress } = useDeployedContracts();
+  const { getDeployedContracts } = useDeployedContracts();
 
   useEffect(() => {
     const loadContracts = async () => {
       if (isConnected && address) {
         try {
-          const contracts = await getContractsByAddress(address);
+          const contracts = await getDeployedContracts();
           console.log("-> contracts <-", contracts);
           console.log("-> address <-", address);
           setUserContracts(contracts);
@@ -34,7 +34,7 @@ export default function HomePage() {
     };
 
     loadContracts();
-  }, [isConnected, address, getContractsByAddress]);
+  }, [isConnected, address, getDeployedContracts]);
 
   console.log("-> userContracts <-", userContracts);
 
