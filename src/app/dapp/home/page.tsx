@@ -24,6 +24,8 @@ export default function HomePage() {
     }
   }, [isConnected, address]);
 
+  console.log("-> userContracts <-", userContracts)
+
   return (
     <div className="flex min-h-screen bg-gray-100">
       {/* Toast Container */}
