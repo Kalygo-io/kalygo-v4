@@ -36,7 +36,7 @@ export default function MarketplacePage() {
           <div className="max-w-7xl mx-auto">
             <div className="mb-8">
               <h1 className="text-3xl font-bold text-gray-900 mb-2">Marketplace</h1>
-              <p className="text-gray-600">Browse the objects and goods available for rent or purchase.</p>
+              <p className="text-gray-600">Browse hobby objects and goods available for rent or purchase.</p>
             </div>
             
             <div className="bg-white rounded-lg shadow p-8 text-center">
