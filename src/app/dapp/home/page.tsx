@@ -18,6 +18,10 @@ export default function HomePage() {
   useEffect(() => {
     if (isConnected && address) {
       const contracts = getContractsByAddress(address);
+
+      console.log("-> contracts <-", contracts)
+      console.log("-> address <-", address)
+      
       setUserContracts(contracts);
     } else {
       setUserContracts([]);
