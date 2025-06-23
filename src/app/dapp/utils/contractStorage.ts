@@ -2,15 +2,20 @@ import { usePublicClient, useAccount } from 'wagmi';
 import { type Address, type PublicClient } from 'viem';
 import { useCallback } from 'react';
 import DealABI from '../../../contracts/Deal.json';
+import ACPArtifact from '../../../contracts/ACP.json';
 
 export interface DeployedContract {
   address: string;
+  type: 'simple' | 'acp';
   deployedAt: string;
   transactionHash: string;
-  buyer: string;
-  seller: string;
-  evaluatorAddress: string;
-  limitationDate: string;
+  // Simple Contract fields
+  buyer?: string;
+  seller?: string;
+  evaluatorAddress?: string;
+  limitationDate?: string;
+  // ACP Contract fields
+  platformFee?: string;
 }
 
 const STORAGE_KEY = 'deployed_contracts';
@@ -54,9 +59,9 @@ export const useDeployedContracts = () => {
   const getContractsByAddress = useCallback(async (userAddress: string): Promise<DeployedContract[]> => {
     const allContracts = await getDeployedContracts();
     return allContracts.filter(contract => 
-      contract.buyer.toLowerCase() === userAddress.toLowerCase() ||
-      contract.seller.toLowerCase() === userAddress.toLowerCase() ||
-      contract.evaluatorAddress.toLowerCase() === userAddress.toLowerCase()
+      contract.buyer?.toLowerCase() === userAddress.toLowerCase() ||
+      contract.seller?.toLowerCase() === userAddress.toLowerCase() ||
+      contract.evaluatorAddress?.toLowerCase() === userAddress.toLowerCase()
     );
   }, [getDeployedContracts]);
 
@@ -85,7 +90,7 @@ const validateContractsFromBlockchain = async (publicClient: PublicClient, contr
   
   for (const contract of contracts) {
     try {
-      const contractData = await readContractData(publicClient, contract.address);
+      const contractData = await readAndIdentifyContract(publicClient, contract.address);
       if (contractData) {
         // Contract exists and is valid
         validatedContracts.push({
@@ -193,8 +198,8 @@ const processAlchemyTransfersForContracts = async (publicClient: PublicClient, t
       });
       
       if (receipt && receipt.contractAddress) {
-        // Try to read contract data to verify it's our Deal contract
-        const contractData = await readContractData(publicClient, receipt.contractAddress);
+        // Try to read contract data to verify it's a known contract type
+        const contractData = await readAndIdentifyContract(publicClient, receipt.contractAddress);
         
         if (contractData) {
           // Get block info for timestamp
@@ -205,7 +210,7 @@ const processAlchemyTransfersForContracts = async (publicClient: PublicClient, t
             deployedAt: new Date(Number(block.timestamp) * 1000).toISOString(),
             transactionHash: receipt.transactionHash,
             ...contractData,
-          });
+          } as DeployedContract);
         }
       }
     } catch (error) {
@@ -218,7 +223,17 @@ const processAlchemyTransfersForContracts = async (publicClient: PublicClient, t
 };
 
 // Read contract data from a deployed contract address
-const readContractData = async (publicClient: PublicClient, contractAddress: string): Promise<Omit<DeployedContract, 'address' | 'deployedAt' | 'transactionHash'> | null> => {
+const readAndIdentifyContract = async (publicClient: PublicClient, contractAddress: string): Promise<Partial<DeployedContract> | null> => {
+  const simpleData = await readSimpleContractData(publicClient, contractAddress);
+  if (simpleData) return simpleData;
+
+  const acpData = await readAcpContractData(publicClient, contractAddress);
+  if (acpData) return acpData;
+
+  return null;
+}
+
+const readSimpleContractData = async (publicClient: PublicClient, contractAddress: string): Promise<Partial<DeployedContract> | null> => {
   try {
     // Try to read contract data using the Deal ABI
     const [buyer, seller, evaluatorAddress, limitationDate] = await Promise.all([
@@ -245,6 +260,7 @@ const readContractData = async (publicClient: PublicClient, contractAddress: str
     ]);
     
     return {
+      type: 'simple',
       buyer: buyer as string,
       seller: seller as string,
       evaluatorAddress: evaluatorAddress as string,
@@ -252,6 +268,22 @@ const readContractData = async (publicClient: PublicClient, contractAddress: str
     };
   } catch {
     // Contract might not be our Deal contract or might not exist
+    return null;
+  }
+};
+
+const readAcpContractData = async (publicClient: PublicClient, contractAddress: string): Promise<Partial<DeployedContract> | null> => {
+  try {
+    const platformFee = await publicClient.readContract({
+      address: contractAddress as Address,
+      abi: ACPArtifact.abi,
+      functionName: 'platformFee',
+    });
+    return {
+      type: 'acp',
+      platformFee: (platformFee as bigint).toString(),
+    };
+  } catch {
     return null;
   }
 };
