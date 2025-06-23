@@ -8,7 +8,6 @@ import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import ContractList from '../components/ContractList';
 import { useDeployedContracts, DeployedContract } from '../utils/contractStorage';
-import Link from 'next/link';
 
 export default function HomePage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -138,12 +137,6 @@ export default function HomePage() {
             <div className="mb-8">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-gray-900">Your Contracts</h2>
-                <Link
-                  href="/dapp/contract" 
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-                >
-                  Deploy New Contract
-                </Link>
               </div>
               
               {!isConnected ? (

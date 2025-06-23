@@ -1,20 +1,15 @@
 "use client";
 
 import { useState } from 'react';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
-import ContractForm from '../components/ContractForm';
+import ACPContractForm from '../components/ACPContractForm';
 
-export default function ContractPage() {
+export default function ACPContractPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Toast Container */}
-      <ToastContainer />
-      
       {/* Desktop Sidebar */}
       <div className="hidden md:block">
         <Sidebar />
@@ -41,11 +36,10 @@ export default function ContractPage() {
         <main className="flex-1 p-8">
           <div className="max-w-4xl mx-auto">
             <div className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Create New Simple Contract</h1>
-              <p className="text-gray-600">Set up a new simple contract with secure mediation</p>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">ACP Contract</h1>
+              <p className="text-gray-600">This page will provide details and actions for the ACP contract.</p>
             </div>
-            
-            <ContractForm />
+            <ACPContractForm />
           </div>
         </main>
       </div>
