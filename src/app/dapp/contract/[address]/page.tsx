@@ -211,6 +211,25 @@ const ContractDetailsPage = () => {
               </div>
             </div>
           )}
+
+          {/* Placeholder Actions */}
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Communication & Notes</h3>
+            <div className="flex flex-wrap gap-4">
+              <button
+                onClick={() => toast.info('Coming soon!')}
+                className="flex-1 px-6 py-3 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
+              >
+                Leave Note
+              </button>
+              <button
+                onClick={() => toast.info('Coming soon!')}
+                className="flex-1 px-6 py-3 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
+              >
+                Open AI Chat
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     );
