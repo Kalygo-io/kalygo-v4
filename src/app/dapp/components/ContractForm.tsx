@@ -28,6 +28,7 @@ const ContractForm = () => {
     if (isSuccess && hash && deployedAddress && submittedData.current) {
       const contractData: DeployedContract = {
         address: deployedAddress,
+        type: 'simple',
         deployedAt: new Date().toISOString(),
         transactionHash: hash,
         buyer: submittedData.current.buyerAddress,
