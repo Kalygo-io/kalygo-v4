@@ -7,28 +7,36 @@ import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import ContractList from '../components/ContractList';
-import { getContractsByAddress, DeployedContract } from '../utils/contractStorage';
+import { useDeployedContracts, DeployedContract } from '../utils/contractStorage';
 import Link from 'next/link';
 
 export default function HomePage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { address, isConnected } = useAccount();
   const [userContracts, setUserContracts] = useState<DeployedContract[]>([]);
+  const { getContractsByAddress } = useDeployedContracts();
 
   useEffect(() => {
-    if (isConnected && address) {
-      const contracts = getContractsByAddress(address);
+    const loadContracts = async () => {
+      if (isConnected && address) {
+        try {
+          const contracts = await getContractsByAddress(address);
+          console.log("-> contracts <-", contracts);
+          console.log("-> address <-", address);
+          setUserContracts(contracts);
+        } catch (error) {
+          console.error('Failed to load contracts:', error);
+          setUserContracts([]);
+        }
+      } else {
+        setUserContracts([]);
+      }
+    };
 
-      console.log("-> contracts <-", contracts)
-      console.log("-> address <-", address)
-      
-      setUserContracts(contracts);
-    } else {
-      setUserContracts([]);
-    }
-  }, [isConnected, address]);
+    loadContracts();
+  }, [isConnected, address, getContractsByAddress]);
 
-  console.log("-> userContracts <-", userContracts)
+  console.log("-> userContracts <-", userContracts);
 
   return (
     <div className="flex min-h-screen bg-gray-100">

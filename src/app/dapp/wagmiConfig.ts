@@ -6,7 +6,7 @@ export const config = createConfig({
   transports: {
     [mainnet.id]: http(),
     [sepolia.id]: http(),
-    [baseSepolia.id]: http(),
+    [baseSepolia.id]: http('https://tiniest-blue-grass.base-sepolia.quiknode.pro/124adb33473c69ec0cdbf47a5a30611cfd4438b0/'),
     [base.id]: http(),
   },
   ssr: true,
