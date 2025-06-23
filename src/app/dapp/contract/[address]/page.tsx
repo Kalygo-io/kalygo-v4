@@ -149,7 +149,7 @@ const ContractDetailsPage = () => {
               <div className="flex items-center gap-2">
                 <input
                   type="number"
-                  placeholder="Amount in ETH"
+                  placeholder="Amount in USDC"
                   value={depositAmount}
                   onChange={(e) => setDepositAmount(e.target.value)}
                   className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
